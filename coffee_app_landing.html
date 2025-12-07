@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق القهوة - اطلب مشروبك المفضل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(186, 150, 120, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(186, 150, 120, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .app-icon {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #ba9678 0%, #8b7355 100%);
+            border-radius: 35px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 20px 60px rgba(186, 150, 120, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ba9678 0%, #d4b896 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #d4b896;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, #ba9678 0%, #8b7355 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            box-shadow: 0 10px 40px rgba(186, 150, 120, 0.4);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s backwards;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(186, 150, 120, 0.6);
+        }
+
+        .download-icon {
+            font-size: 1.8rem;
+            animation: bounce 2s infinite;
+        }
+
+        .features {
+            padding: 5rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(186, 150, 120, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(186, 150, 120, 0.5);
+            box-shadow: 0 10px 30px rgba(186, 150, 120, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #d4b896;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .screenshots {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .screenshots h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #d4b896;
+        }
+
+        .screenshots-grid {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem;
+            scroll-snap-type: x mandatory;
+        }
+
+        .screenshot {
+            flex: 0 0 300px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 2px solid rgba(186, 150, 120, 0.3);
+            scroll-snap-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 3rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .download-btn {
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="app-icon">☕</div>
+                <h1>تطبيق القهوة</h1>
+                <p class="subtitle">اطلب مشروبك المفضل واستمتع بأفضل النكهات</p>
+                <a href="apk/app-debug.apk" class="download-btn" download="caffeen-app.apk">
+
+                    <span class="download-icon">⬇</span>
+                    <span>حمّل التطبيق الآن</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 3rem; color: #d4b896; margin-bottom: 1rem;">مميزات التطبيق</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>مشروبات ساخنة</h3>
+                    <p>قهوة ساخنة بأنواع مختلفة - أمريكانو، كورتادو، كابتشينو</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧊</div>
+                    <h3>مشروبات باردة</h3>
+                    <p>شاي مثلج بنكهات الفراولة والليمون والخوخ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>عروض وخصومات</h3>
+                    <p>خصومات تصل إلى 8٪ على جميع المنتجات</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>المفضلة</h3>
+                    <p>احفظ مشروباتك المفضلة للوصول السريع</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>توصيل سريع</h3>
+                    <p>خدمة توصيل سريعة لباب منزلك</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3>دفع آمن</h3>
+                    <p>طرق دفع متعددة - كاش، بطاقة، محفظة إلكترونية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots">
+        <div class="container">
+            <h2>لقطات من التطبيق</h2>
+            <div class="screenshots-grid">
+                <div class="screenshot">
+                    <img src="screenshots/1.png" alt="الصفحة الرئيسية">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/2.png" alt="شاشة التسجيل">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/3.png" alt="المنتجات">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/4.png" alt="تفاصيل المنتج">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/5.png" alt="السلة">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/6.png" alt="المفضلة">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/7.png" alt="الملف الشخصي">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/8.png" alt="البحث">
+                </div>
+                <div class="screenshot">
+                    <img src="screenshots/9.png" alt="الإعدادات">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p style="font-size: 1.2rem; color: #d4b896; margin-bottom: 1rem;">جاهز للبدء؟</p>
+        <a href="build/app/outputs/flutter-apk/app-debug.apk" class="download-btn" download="caffeen-app.apk">
+            <span class="download-icon">⬇</span>
+            <span>حمّل التطبيق الآن</span>
+        </a>
+        <p style="margin-top: 2rem; opacity: 0.7;">© 2024 تطبيق القهوة. جميع الحقوق محفوظة</p>
+    </div>
+</body>
+
+</html>
